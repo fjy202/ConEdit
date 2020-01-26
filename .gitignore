@@ -7,3 +7,7 @@ conedit1.cpp
 conedit.exe
 conedit.o
 a.exe
+build/
+dist/
+__pycache__/
+*.spec

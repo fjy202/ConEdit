@@ -2,9 +2,9 @@
 import msvcrt,os
 import sys
 try:
-    content=open(sys.argv[1]).read().split("\n")
+    content=open(sys.argv[1]).read(8191).split("\n")
     openf=True
-except TypeError:
+except IndexError:
     name="untitled"
     content=['']
     openf=False
@@ -12,7 +12,7 @@ place=[0,0]
 def refresh():
     os.system("cls")
     f=True
-    print("\033[47;30m%s\033[0m"%name)
+    print("\033[47;30m%s"%name,end='\033[0m\n')
     for j,V in enumerate(content):
         f=j==place[0]
         for i,v in enumerate(V):
@@ -51,17 +51,18 @@ while 1:
         elif k=="S":
             if len(content)==0:
                 pass
-            elif content[place[0]]=="":
-                content.pop(place[0])
+            elif content[place[0]][place[1]:]=="" and content[place[0]][place[1]:]!='':
+                l=len(content[place[0]])
+                content[place[0]:place[0]+2]=[content[place[0]]+content[place[0]+1]]
                 if place[0]>len(content)-1:
                     place[0]=len(content)-1
-                place[1]=0
+                # place[1]=0
             else:
                 content[place[0]]=content[place[0]][0:place[1]]+content[place[0]][place[1]+1:]
                 if place[1]>len(content[place[0]]):
                     place[1]=len(content[place[0]])
     elif k=="\x03":
-        exit()
+        sys.exit()
     elif k=="\r":
         content[place[0]:place[0]+1]=[content[place[0]][:place[1]],content[place[0]][place[1]:]]
         place[0]+=1
