@@ -1,9 +1,10 @@
+# def main(name=None):
 import msvcrt,os
+import sys
 try:
-    name=os.sys.argv[1]
-    content=open(name).read().split("\n")
+    content=open(sys.argv[1]).read().split("\n")
     openf=True
-except:
+except TypeError:
     name="untitled"
     content=['']
     openf=False
@@ -25,7 +26,7 @@ def refresh():
 refresh()
 while 1:
     k=msvcrt.getwch()
-    if k=='\0':
+    if k=='\xe0':
         k=msvcrt.getwch()
         if k=='M':
             place[1]=place[1]+1
@@ -57,8 +58,8 @@ while 1:
                 place[1]=0
             else:
                 content[place[0]]=content[place[0]][0:place[1]]+content[place[0]][place[1]+1:]
-                if place[1]>len(content[place[0]])-1:
-                    place[1]=len(content[place[0]])-1
+                if place[1]>len(content[place[0]]):
+                    place[1]=len(content[place[0]])
     elif k=="\x03":
         exit()
     elif k=="\r":
@@ -88,3 +89,4 @@ while 1:
         content[place[0]]=content[place[0]][0:place[1]]+k+content[place[0]][place[1]:]
         place[1]+=1
     refresh()
+os.system("cls")
