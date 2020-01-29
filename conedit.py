@@ -2,8 +2,9 @@
 import msvcrt,os
 import sys
 try:
-    content=open(sys.argv[1]).read(8191).split("\n")
+    content=open(sys.argv[1],encoding=(sys.argv[2:] or ["gbk"])[0]).read(8191).split("\n")
     openf=True
+    name=sys.argv[1]
 except IndexError:
     name="untitled"
     content=['']
